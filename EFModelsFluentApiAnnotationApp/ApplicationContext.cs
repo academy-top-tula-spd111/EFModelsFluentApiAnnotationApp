@@ -14,8 +14,10 @@ namespace EFModelsFluentApiAnnotationApp
         //public DbSet<Employee> Employees { get; set; } = null!;
         public DbSet<Employee> Employees => Set<Employee>();
         public DbSet<Company> Companies => Set<Company>();
-
-        public DbSet<User> Users => Set<User>();
+        public DbSet<Country> Countries => Set<Country>();
+        public DbSet<City> Cities => Set<City>();
+        public DbSet<Position> Positions => Set<Position>();
+        //public DbSet<User> Users => Set<User>();
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         { 
 
@@ -34,28 +36,39 @@ namespace EFModelsFluentApiAnnotationApp
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
 
 
-            modelBuilder.Entity<Company>().HasData(
-                new Company("Yandex"),
-                new Company("Mail Group"),
-                new Company("Ozon"),
-                new Company("Avito"));
+            //modelBuilder.Entity<Company>().HasData(
+            //    new Company("Yandex"),
+            //    new Company("Mail Group"),
+            //    new Company("Ozon"),
+            //    new Company("Avito"));
 
 
 
-            modelBuilder.Entity<User>().Property("UserAge").HasField("_age");
-            modelBuilder.Entity<User>().Property("_name").HasField("_name");
+            //modelBuilder.Entity<User>().Property("UserAge").HasField("_age");
+            //modelBuilder.Entity<User>().Property("_name").HasField("_name");
 
-            modelBuilder.Entity<User>().ToTable("BankUsers");
-            //modelBuilder.Entity<User>().HasKey(u => u.IdNumber);
-            //modelBuilder.Entity<User>().HasKey(u => new {u.Number, u.Series});
+            //modelBuilder.Entity<User>().ToTable("BankUsers");
+            ////modelBuilder.Entity<User>().HasKey(u => u.IdNumber);
+            ////modelBuilder.Entity<User>().HasKey(u => new {u.Number, u.Series});
 
-            modelBuilder.Entity<User>().HasAlternateKey(u => u.Number).HasName("AlterKeyNumber");
-            //modelBuilder.Entity<User>().Property(u => u.Id)
-            modelBuilder.Entity<User>()
-                        .Property(u => u.Activity).HasDefaultValue(true);
+            //modelBuilder.Entity<User>().HasAlternateKey(u => u.Number).HasName("AlterKeyNumber");
+            ////modelBuilder.Entity<User>().Property(u => u.Id)
+            //modelBuilder.Entity<User>()
+            //            .Property(u => u.Activity).HasDefaultValue(true);
 
+            modelBuilder.Entity<Employee>()
+                        .HasOne(e => e.Company)
+                        .WithMany(c => c.Employees)
+                        .HasForeignKey(e => e.CompanyId)
+                        .OnDelete(DeleteBehavior.SetNull);
 
+            //modelBuilder.Entity<Employee>()
+            //            .HasOne(e => e.Company)
+            //            .WithMany(c => c.Employees)
+            //            .HasForeignKey(e => e.CompanyTitle)
+            //            .HasPrincipalKey(c => c.Title);
 
         }
+
     }
 }

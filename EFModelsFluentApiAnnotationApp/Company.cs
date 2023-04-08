@@ -9,9 +9,11 @@ namespace EFModelsFluentApiAnnotationApp
 {
     public class Company
     {
-        public int CompanyId { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; } = null!;
-
+        public List<Employee> Employees { get; set; } = new();
+        public int CountryId { set; get; }
+        public Country? Country { set; get; }
         public Company()
         {
 

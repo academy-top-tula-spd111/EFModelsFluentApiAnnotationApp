@@ -18,7 +18,14 @@ namespace EFModelsFluentApiAnnotationApp
         [Required]
         public string? Name { get; set; }
         public int? Age { set; get; }
+        //[ForeignKey("CompanyKey")]
         public Company? Company { set; get; }
+        public int? CompanyId { set; get; }
+        public Position Position { set; get; }
+        public int PositionId { set; get; }
+
+
+        //public string? CompanyTitle { set; get; }
         
         [NotMapped]
         public string? BankAccount { set; get; }
@@ -27,7 +34,7 @@ namespace EFModelsFluentApiAnnotationApp
         {
             Name = name;
             Age = age;
-            Console.WriteLine($"Construct employee {name}, {age}");
+            //Console.WriteLine($"Construct employee {name}, {age}");
         }
     }
 }
